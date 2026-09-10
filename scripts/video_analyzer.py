@@ -284,7 +284,7 @@ def analyze_with_claude(
     transcript: str | None,
     title: str,
     api_key: str,
-    model: str = "claude-sonnet-4-20250514",
+    model: str = "claude-sonnet-4-6",
 ) -> str:
     """Send frames + transcript to Claude API for multimodal synthesis."""
     try:
@@ -346,8 +346,8 @@ Examples:
         help="Whisper model size (default: base; large-v3 for best accuracy)",
     )
     parser.add_argument(
-        "--model", default="claude-sonnet-4-20250514",
-        help="Claude model to use (default: claude-sonnet-4-20250514)",
+        "--model", default="claude-sonnet-4-6",
+        help="Claude model to use (default: claude-sonnet-4-6)",
     )
     args = parser.parse_args()
 
@@ -356,12 +356,17 @@ Examples:
     if not api_key:
         sys.exit("[error] ANTHROPIC_API_KEY not set. Export it before running.")
 
-    for tool, install_hint in [
-        ("ffmpeg", "brew install ffmpeg  /  sudo apt install ffmpeg  /  https://ffmpeg.org/download.html"),
-        ("yt-dlp", "pip install yt-dlp"),
+    for tool, ver_flag, install_hint in [
+        # ffmpeg exits non-zero for `--version` (it wants `-version`); yt-dlp accepts `--version`
+        ("ffmpeg", "-version", "brew install ffmpeg  /  sudo apt install ffmpeg  /  https://ffmpeg.org/download.html"),
+        ("yt-dlp", "--version", "pip install yt-dlp"),
     ]:
-        if subprocess.run([tool, "--version"], capture_output=True).returncode != 0:
-            sys.exit(f"[error] '{tool}' not found. Install: {install_hint}")
+        try:
+            r = subprocess.run([tool, ver_flag], capture_output=True, timeout=20)
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            sys.exit(f"[error] '{tool}' not found or timed out. Install: {install_hint}")
+        if r.returncode != 0:
+            sys.exit(f"[error] '{tool}' check failed (exit {r.returncode}). Install: {install_hint}")
 
     platform = detect_platform(args.url)
     print(f"[info] Platform: {platform}")

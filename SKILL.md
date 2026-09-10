@@ -73,7 +73,7 @@ python scripts/video_analyzer.py "<URL>" --cookies /path/to/cookies.txt --output
 **Maximum quality (Opus model + large Whisper + more frames):**
 ```bash
 python scripts/video_analyzer.py "<URL>" \
-  --model claude-opus-4-20250514 \
+  --model claude-opus-4-8 \
   --whisper --whisper-model large-v3 \
   --max-frames 80 \
   --output ./output
@@ -97,12 +97,12 @@ cat ./output/<filename>.md
 | `--whisper` | off | Use when no captions exist, or for jargon-heavy content |
 | `--whisper-model` | base | `large-v3` for highest accuracy (slower, more RAM) |
 | `--cookies` | none | Required for Facebook/Instagram; sometimes YouTube |
-| `--model` | claude-sonnet-4-20250514 | `claude-opus-4-20250514` for complex visual analysis |
+| `--model` | claude-sonnet-4-6 | `claude-opus-4-8` for complex visual analysis |
 | `--output` | current dir | Set to a specific notes folder |
 
 ---
 
-## Cost estimates (claude-sonnet-4-20250514)
+## Cost estimates (claude-sonnet-4-6)
 
 | Video length | Frames | Approx. cost |
 |---|---|---|
@@ -110,7 +110,7 @@ cat ./output/<filename>.md
 | 30 min | ~50 | ~$0.20 |
 | 60 min | ~80 | ~$0.35 |
 
-Use `--model claude-haiku-4-5-20251001` for ~5× lower cost when analysis quality is less critical.
+Use `--model claude-haiku-4-5` for ~5× lower cost when analysis quality is less critical.
 
 ---
 
@@ -156,6 +156,6 @@ Each run produces a `.md` file with:
 
 **Instagram fails with cookies** → Intermittent. Wait a few minutes and retry. Try a different account if it persists.
 
-**Output is too short / missing visuals** → Increase `--max-frames` or upgrade to `--model claude-opus-4-20250514`.
+**Output is too short / missing visuals** → Increase `--max-frames` or upgrade to `--model claude-opus-4-8`.
 
 **High cost** → Reduce `--max-frames` to 20–30. Talking-head content rarely needs more than 20 frames.

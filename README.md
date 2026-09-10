@@ -60,7 +60,7 @@ python scripts/video_analyzer.py "https://fb.watch/..." \
 
 # Maximum quality
 python scripts/video_analyzer.py "https://youtu.be/VIDEO_ID" \
-  --model claude-opus-4-20250514 \
+  --model claude-opus-4-8 \
   --whisper --whisper-model large-v3 \
   --max-frames 80
 ```
@@ -74,7 +74,7 @@ python scripts/video_analyzer.py "https://youtu.be/VIDEO_ID" \
 | `--whisper` | off | Force Whisper transcription instead of platform captions |
 | `--whisper-model` | `base` | Whisper model size (`tiny` / `base` / `small` / `medium` / `large-v3`) |
 | `--cookies` | none | Path to cookies.txt (required for Facebook/Instagram) |
-| `--model` | `claude-sonnet-4-20250514` | Claude model to use for analysis |
+| `--model` | `claude-sonnet-4-6` | Claude model to use for analysis |
 
 ## Platform support
 
@@ -86,7 +86,7 @@ python scripts/video_analyzer.py "https://youtu.be/VIDEO_ID" \
 
 For cookie setup, see [`references/platforms.md`](references/platforms.md).
 
-## Cost estimate (claude-sonnet-4-20250514)
+## Cost estimate (claude-sonnet-4-6)
 
 | Video length | Frames | Approx. cost |
 |---|---|---|
@@ -94,7 +94,7 @@ For cookie setup, see [`references/platforms.md`](references/platforms.md).
 | 30 min | ~50 | ~$0.20 |
 | 60 min | ~80 | ~$0.35 |
 
-Switch to `claude-haiku-4-5-20251001` for ~5× lower cost.
+Switch to `claude-haiku-4-5` for ~5× lower cost.
 
 ## How it works
 
